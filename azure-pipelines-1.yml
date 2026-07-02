@@ -1,0 +1,26 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: 'Azure-Service-Connection'
+  resourceGroupName: 'my-resource-group'
+  location: 'Central India'
+
+steps:
+- task: AzureCLI@2
+  displayName: 'Create Resource Group'
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      echo "Creating Resource Group..."
+
+      az group create \
+        --name $(resourceGroupName) \
+        --location "$(location)"
+
+      echo "Resource Group created successfully."
